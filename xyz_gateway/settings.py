@@ -42,11 +42,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app_auth.apps.AppAuthConfig',
+    'app_auth',
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders'
 ]
+
+AUTH_USER_MODEL = 'app_auth.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -106,8 +108,6 @@ else:
         }
     }
 
-    
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -151,7 +151,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-ORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 # CORS_ALLOWED_ORIGINS = [
 #     "https://example.com",
