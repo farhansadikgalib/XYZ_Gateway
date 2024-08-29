@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'app_auth',
     'rest_framework',
     'rest_framework_simplejwt',
+    'drf_yasg',
     'corsheaders'
 ]
 

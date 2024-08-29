@@ -33,11 +33,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     phone_number = models.CharField(
         max_length=15,  # Adjusted for the longest format (+8801xxxxxxx)
-        validators=[RegexValidator(
-            regex=r'^(01|(\+8801)|008801)[3-9]\d{8}$',
-            message='Invalid Bangladeshi phone number format. Use 01XXXXXXXXX, +8801XXXXXXXXX, or 008801XXXXXXXXX.'
-        )],
-        help_text='Enter a valid Bangladeshi phone number.'
+        help_text='Enter a valid Bangladeshi phone number.',
+        unique=True
     )
     password = models.CharField(max_length=255)
     create_date = models.DateTimeField(auto_now_add=True)
@@ -73,6 +70,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     )
 
     def save(self, *args, **kwargs):
-        self.set_password(self.password)
-        return super().save(self, *args, **kwargs)
+        if not self._state.adding and self.password != self.__class__.objects.get(pk=self.pk).password:
+            self.set_password(self.password)
+        super().save(*args, **kwargs)
+
 

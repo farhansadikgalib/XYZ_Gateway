@@ -1,5 +1,5 @@
 # app_auth/views.py
-
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics
 from app_auth.models.user import CustomUser  # Correct path to the CustomUser model
 from app_auth.serializers.users import CustomUserSerializer
@@ -21,6 +21,7 @@ class CustomUserCreateView(generics.CreateAPIView):
 
 class CustomTokenObtainPairView(TokenObtainPairView):
 
+    @swagger_auto_schema(operation_summary="Login")
     def post(self, request, *args, **kwargs):
         email = request.data.get('email')
         password = request.data.get('password')
