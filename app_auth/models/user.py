@@ -46,10 +46,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     objects = CustomUserManager()
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['password']
+    REQUIRED_FIELDS = []
 
     def __str__(self):
-        return self.name
+        return self.email
 
     groups = models.ManyToManyField(
         Group,
@@ -67,9 +67,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         verbose_name='user permissions',
     )
 
-    def save(self, *args, **kwargs):
-        if not self._state.adding and self.password != self.__class__.objects.get(pk=self.pk).password:
-            self.set_password(self.password)
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     if not self._state.adding and self.password != self.__class__.objects.get(pk=self.pk).password:
+    #         self.set_password(self.password)
+    #     super().save(*args, **kwargs)
 
 

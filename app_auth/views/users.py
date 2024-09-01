@@ -2,7 +2,7 @@
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics
 from app_auth.models.user import CustomUser  # Correct path to the CustomUser model
-from app_auth.serializers.users import CustomUserSerializer
+from app_auth.serializers.users import CustomUserSerializer, PermissionSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -23,10 +23,10 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 
     @swagger_auto_schema(operation_summary="Login")
     def post(self, request, *args, **kwargs):
-        phone_number = request.data.get('phone_number')
+        email = request.data.get('email')
         password = request.data.get('password')
 
-        user = authenticate(phone_number=phone_number, password=password)
+        user = authenticate(email=email, password=password)
 
         if user is not None:
             # Generate tokens
@@ -35,11 +35,14 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 
             # Get user groups
             groups = user.groups.all().values_list('name', flat=True)
+            permissions = user.user_permissions.all()
+            permission_serializers = PermissionSerializer(permissions)
 
             return Response({
                 'refresh': str(refresh),
                 'access': access_token,
                 'groups': list(groups),
+                'permissions': permission_serializers
             }, status=status.HTTP_200_OK)
         else:
             return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
