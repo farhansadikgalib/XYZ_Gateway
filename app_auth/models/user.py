@@ -29,13 +29,11 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    name = models.CharField(max_length=100)
-    email = models.EmailField(unique=True)
-    phone_number = models.CharField(
-        max_length=15,  # Adjusted for the longest format (+8801xxxxxxx)
-        help_text='Enter a valid Bangladeshi phone number.',
-        unique=True
+    phone_regex = RegexValidator(
+        regex=r'^\+?880\d{10}$',
+        message="Phone number must be entered in the format: '+880xxxxxxxxxx'."
     )
+    email = models.EmailField(unique=True)
     password = models.CharField(max_length=255)
     create_date = models.DateTimeField(auto_now_add=True)
     write_date = models.DateTimeField(auto_now=True)

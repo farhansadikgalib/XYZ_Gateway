@@ -9,13 +9,11 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ['id', 'name', 'email', 'phone_number', 'password', 'create_date', 'write_date', 'is_staff', 'is_active']
+        fields = ['id', 'phone_number', 'password', 'create_date', 'write_date', 'is_staff', 'is_active']
 
     def create(self, validated_data):
         user = CustomUser.objects.create_user(
-            email=validated_data['email'],
             password=validated_data['password'],
-            name=validated_data.get('name', ''),
             phone_number=validated_data.get('phone_number', ''),
             is_staff=validated_data.get('is_staff', False),
             is_active=validated_data.get('is_active', True),
@@ -23,8 +21,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
         return user
 
     def update(self, instance, validated_data):
-        instance.name = validated_data.get('name', instance.name)
-        instance.email = validated_data.get('email', instance.email)
         instance.phone_number = validated_data.get('phone_number', instance.phone_number)
         instance.is_staff = validated_data.get('is_staff', instance.is_staff)
         instance.is_active = validated_data.get('is_active', instance.is_active)

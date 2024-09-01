@@ -23,10 +23,10 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 
     @swagger_auto_schema(operation_summary="Login")
     def post(self, request, *args, **kwargs):
-        email = request.data.get('email')
+        phone_number = request.data.get('phone_number')
         password = request.data.get('password')
 
-        user = authenticate(email=email, password=password)
+        user = authenticate(phone_number=phone_number, password=password)
 
         if user is not None:
             # Generate tokens
@@ -47,6 +47,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 
 class CustomTokenRefreshView(TokenRefreshView):
 
+    @swagger_auto_schema(operation_summary="Refresh Token Generator")
     def post(self, request, *args, **kwargs):
         refresh_token = request.data.get('refresh')
 
