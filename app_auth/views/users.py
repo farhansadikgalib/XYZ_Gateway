@@ -14,11 +14,6 @@ from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 
-class CustomUserCreateView(generics.CreateAPIView):
-    queryset = CustomUser.objects.all()
-    serializer_class = CustomUserSerializer
-
-
 class CustomTokenObtainPairView(TokenObtainPairView):
 
     @swagger_auto_schema(operation_summary="Login")
