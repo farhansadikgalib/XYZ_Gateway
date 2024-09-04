@@ -42,10 +42,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'app_auth',
     'rest_framework',
     'rest_framework_simplejwt',
+    'drf_yasg',
     'corsheaders'
 ]
+
+AUTH_USER_MODEL = 'app_auth.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -63,7 +67,7 @@ ROOT_URLCONF = 'xyz_gateway.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -104,8 +108,6 @@ else:
             'PORT': os.getenv('DB_PORT', '5432'),
         }
     }
-
-    
 
 
 # Password validation
@@ -150,7 +152,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-ORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 # CORS_ALLOWED_ORIGINS = [
 #     "https://example.com",
@@ -204,3 +206,21 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
+
+EMAIL_HOST = 'smtp.hostinger.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'no-reply@optixpay.com'
+EMAIL_HOST_PASSWORD = 'u3P#xEfPD!8PPLX'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'no-reply@optixpay.com'
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",  # adjust based on your Redis setup
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
