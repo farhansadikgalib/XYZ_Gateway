@@ -10,4 +10,3 @@ sqlparse
 typing_extensions
 drf-yasg
 django-redis==3.1.6
-mysqlclient
