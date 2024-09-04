@@ -217,13 +217,4 @@ EMAIL_HOST_PASSWORD = 'u3P#xEfPD!8PPLX'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'no-reply@optixpay.com'
 
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",  # adjust based on your Redis setup
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        }
-    }
-}
 
