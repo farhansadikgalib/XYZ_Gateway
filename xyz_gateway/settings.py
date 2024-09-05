@@ -213,4 +213,3 @@ EMAIL_HOST_PASSWORD = 'u3P#xEfPD!8PPLX'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'no-reply@optixpay.com'
 
-
