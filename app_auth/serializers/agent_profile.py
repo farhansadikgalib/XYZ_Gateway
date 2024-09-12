@@ -13,7 +13,11 @@ class AgentProfileCreateSerializer(serializers.ModelSerializer):
 class AgentProfileUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = AgentProfile
-        fields = ['full_name', 'email', 'nid_number', 'is_active', 'telegram_account']
+        fields = ['id', 'full_name', 'email', 'nid_number', 'is_active', 'telegram_account']
+
+        extra_kwargs = {
+            'id': {'read_only': True}
+        }
 
     def update(self, instance, validated_data):
         instance.full_name = validated_data.get('full_name', instance.full_name)
