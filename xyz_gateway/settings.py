@@ -30,8 +30,10 @@ SECRET_KEY = os.getenv('SECRET_KEY', '')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
+# ALLOWED_HOSTS = []
+
 if DEBUG:
-    ALLOWED_HOSTS = ['*']
+    ALLOWED_HOSTS = []
 else:
     ALLOWED_HOSTS = ['www.backend.optixpay.com', 'backend.optixpay.com']
 
@@ -212,5 +214,4 @@ EMAIL_HOST_USER = 'no-reply@optixpay.com'
 EMAIL_HOST_PASSWORD = 'u3P#xEfPD!8PPLX'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'no-reply@optixpay.com'
-
 
