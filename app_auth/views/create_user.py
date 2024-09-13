@@ -2,12 +2,14 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status, generics
 from rest_framework.response import Response
 from django.core.cache import cache
+from rest_framework.views import APIView
+
 from app_auth.models.user import CustomUser
 from app_auth.serializers.create_user_serializers import CustomUserCreateSerializer
 from app_auth.serializers.opt_verification import OTPVerificationSerializer
 
 
-class CustomUserCreateView(generics.CreateAPIView):
+class CustomUserCreateView(APIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserCreateSerializer
 
@@ -20,8 +22,12 @@ class CustomUserCreateView(generics.CreateAPIView):
         request_body=CustomUserCreateSerializer,
     )
     def post(self, request, *args, **kwargs):
-        print(request.data.get('email'))
-        serializer = self.get_serializer(data=request.data)
+        unverified_user = CustomUser.objects.filter(email=request.data.get('email'), is_active=False)
+        if unverified_user.exists():
+            key = f"otp_{unverified_user[0].email}"
+            cache.delete(key)
+            unverified_user[0].delete()
+        serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         return Response(
@@ -59,6 +65,8 @@ class VerifyOTPView(generics.GenericAPIView):
                 user = CustomUser.objects.get(email=email)
                 user.is_active = False  # Mark user as active (verified)
                 user.save()
+                key = f"otp_{user.email}"
+                cache.delete(key)
                 return Response({"error": "User does not exist."}, status=status.HTTP_404_NOT_FOUND)
         else:
             user = CustomUser.objects.get(email=email)

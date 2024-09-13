@@ -9,6 +9,7 @@ def validate_nid_number(value):
             'NID number must be either 10, 13, or 17 characters long.'
         )
 
+
 class AgentProfile(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='profile_user')
     full_name = models.CharField(max_length=100)

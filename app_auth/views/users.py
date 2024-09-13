@@ -31,13 +31,13 @@ class CustomTokenObtainPairView(TokenObtainPairView):
             # Get user groups
             groups = user.groups.all().values_list('name', flat=True)
             permissions = user.user_permissions.all()
-            permission_serializers = PermissionSerializer(permissions)
+            # permission_serializers = PermissionSerializer(permissions, many=True)
 
             return Response({
                 'refresh': str(refresh),
                 'access': access_token,
                 'groups': list(groups),
-                'permissions': permission_serializers
+                # 'permissions': permission_serializers
             }, status=status.HTTP_200_OK)
         else:
             return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
