@@ -12,6 +12,11 @@ class CustomUserCreateSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = ['email', 'password']
 
+    def validate_email(self, value):
+        if CustomUser.objects.filter(email=value, is_active=True).exists():
+            raise serializers.ValidationError('A user with this email already exists.')
+        return value
+
     def create(self, validated_data):
         user = CustomUser.objects.create_user(**validated_data)
         user.is_active = False  # User is inactive until OTP is verified
@@ -19,6 +24,7 @@ class CustomUserCreateSerializer(serializers.ModelSerializer):
 
         otp = random.randint(100000, 999999)  # Generate a 6-digit OTP
         cache.set(f"otp_{user.email}", otp, timeout=300)  # Save OTP in Redis with 5 min TTL
+        print(cache.get(f"otp_{user.email}"))
 
         # Prepare the HTML email content
         subject = 'Your One-Time Password (OTP) Code'
