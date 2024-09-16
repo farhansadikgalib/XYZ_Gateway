@@ -47,11 +47,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # App
     'app_auth',
+    'core',
+    # Additional Libraries
     'rest_framework',
     'rest_framework_simplejwt',
     'drf_yasg',
-    'corsheaders'
+    'corsheaders',
+    'simple_history'
 ]
 
 AUTH_USER_MODEL = 'app_auth.CustomUser'
@@ -60,6 +64,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     "corsheaders.middleware.CorsMiddleware",
+    'simple_history.middleware.HistoryRequestMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -169,7 +174,7 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=180),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,
@@ -214,4 +219,10 @@ EMAIL_HOST_USER = 'no-reply@optixpay.com'
 EMAIL_HOST_PASSWORD = 'u3P#xEfPD!8PPLX'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'no-reply@optixpay.com'
+
+# MinIO server connection details
+MINIO_STORAGE_ENDPOINT = '147.79.66.187:9000'  # IP address and port of the MinIO server
+MINIO_STORAGE_ACCESS_KEY = "DlDYlIh7zzodF08GfMj4"
+MINIO_STORAGE_SECRET_KEY = "rZ8kB1B010XJYtF5eTkgTp1Dplncw5tC0eBonQjP"
+MINIO_STORAGE_BUCKET_NAME = 'optixpaybucket'  # The bucket name in MinIO
 
