@@ -26,8 +26,13 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 
     path('admin/', admin.site.urls),
+
+    # Apps Url
     path('api/v1/app-auth/', include('app_auth.urls')),
-    path('api-auth/', include('rest_framework.urls'))
+    path('api/v1/app-transaction/', include('app_transaction.urls')),
+
+    # Rest Framework 
+    path('api-auth/', include('rest_framework.urls')),
 ]
 
 if settings.DEBUG:
