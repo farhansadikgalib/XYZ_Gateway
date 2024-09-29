@@ -43,6 +43,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
                                   related_name='written_users')
     is_staff = models.BooleanField(default=False)  # Add this field
     is_active = models.BooleanField(default=True)  # This field is also often required
+    new_user = models.BooleanField(default=True)
 
     objects = CustomUserManager()
     USERNAME_FIELD = 'email'

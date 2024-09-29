@@ -1,6 +1,10 @@
 # app_auth/views.py
+from datetime import datetime
+
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics
+
+from app_auth.models.agent_profile import AgentProfile
 from app_auth.models.user import CustomUser  # Correct path to the CustomUser model
 from app_auth.serializers.users import CustomUserSerializer, PermissionSerializer
 from rest_framework import status
@@ -28,15 +32,23 @@ class CustomTokenObtainPairView(TokenObtainPairView):
             refresh = RefreshToken.for_user(user)
             access_token = str(refresh.access_token)
 
+            # New user
+            new_user = user.new_user
+            user_profile = AgentProfile.objects.filter(user=user)
+            if new_user and user_profile.exists():
+                user.new_user = False
+                user.save()
+
             # Get user groups
             groups = user.groups.all().values_list('name', flat=True)
             permissions = user.user_permissions.all()
-            # permission_serializers = PermissionSerializer(permissions, many=True)
 
+            # permission_serializers = PermissionSerializer(permissions, many=True)
             return Response({
                 'refresh': str(refresh),
                 'access': access_token,
                 'groups': list(groups),
+                'new_user': new_user
                 # 'permissions': permission_serializers
             }, status=status.HTTP_200_OK)
         else:
