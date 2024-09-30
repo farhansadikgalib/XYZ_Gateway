@@ -28,8 +28,6 @@ class BaseModel(models.Model):
     objects = SoftDeleteManager()
     all_objects = models.Manager()
 
-    history = HistoricalRecords(inherit=True)
-
     def soft_delete(self, update_user=None):
         self.is_active = True
         if update_user is not None:
