@@ -26,6 +26,7 @@ class AgentProfile(BaseModel):
         )
     telegram_account = models.CharField(max_length=20) # D Type in sample profile
     verification_type = models.CharField(max_length=20, choices=VERIFICATION_TYPE, default='nid')
-    front_side_document = models.ImageField(upload_to='uploads/verification/front_side', null=True)
-    back_side_document = models.ImageField(upload_to='uploads/verification/back_side', null=True)
+    front_side_document = models.ImageField(upload_to='uploads/verification/front_side/%Y/%m/%d', null=True)
+    back_side_document = models.ImageField(upload_to='uploads/verification/back_side/%Y/%m/%d', null=True)
+    selfie_with_document = models.ImageField(upload_to='uploads/verification/selfie_with_document/%Y/%m/%d', null=True)
 

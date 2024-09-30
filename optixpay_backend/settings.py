@@ -11,19 +11,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY', 'yd2f8slb8^+vrm3rb%9&!q=-$z1x5cq80ulqyb1_c3$yxl@=2b')
+SECRET_KEY = config('SECRET_KEY', 'yd2f8slb8^+vrm3rb%9&!q=-$z1x5cq80ulqyb1_c3$yxl@=2b')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
+DEBUG = config('DEBUG', 'True') == 'True'
 
 # ALLOWED_HOSTS = []
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='').split(',')
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*').split(',')
 
-if 'CODESPACE_NAME' in os.environ:
-    codespace_name = config("CODESPACE_NAME")
-    codespace_domain = config("GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN")
-    CSRF_TRUSTED_ORIGINS = [f'https://{codespace_name}-8000.{codespace_domain}']
+# if 'CODESPACE_NAME' in os.environ:
+#     codespace_name = config("CODESPACE_NAME")
+#     codespace_domain = config("GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN")
+#     CSRF_TRUSTED_ORIGINS = [f'https://{codespace_name}-8000.{codespace_domain}']
 
 
 # Application definition
@@ -63,7 +63,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'xyz_gateway.urls'
+ROOT_URLCONF = 'optixpay_backend.urls'
 
 TEMPLATES = [
     {
@@ -81,7 +81,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'xyz_gateway.wsgi.application'
+WSGI_APPLICATION = 'optixpay_backend.wsgi.application'
 
 
 # Database
@@ -91,11 +91,11 @@ if DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv('DB_NAME'),
-            'USER': os.getenv('DB_USER'),
-            'PASSWORD': os.getenv('DB_PASSWORD'),
-            'HOST': os.getenv('DB_HOST'),
-            'PORT': os.getenv('DB_PORT', '5432'),
+            'NAME': config('DB_NAME'),
+            'USER': config('DB_USER'),
+            'PASSWORD': config('DB_PASSWORD'),
+            'HOST': config('DB_HOST'),
+            'PORT': config('DB_PORT', '5432'),
         }
     }
 else:
@@ -140,16 +140,15 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
-
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    BASE_DIR / "optixpay_backend" / "static",
+    BASE_DIR / "static",  # If you have custom static files
 ]
+STATIC_ROOT = BASE_DIR / "staticfiles"  # This is the directory where collected static files will be stored
 
-STATIC_URL = "static/"
-STATIC_ROOT = BASE_DIR / "optixpay_backend" / "staticfiles"
 
-MEDIA_URL = "media/"
-MEDIA_ROOT = BASE_DIR / "optixpay_backend" / "media"
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

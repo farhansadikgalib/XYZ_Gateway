@@ -34,6 +34,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         message="Phone number must be entered in the format: '+880xxxxxxxxxx'."
     )
     email = models.EmailField(unique=True)
+    name = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
     create_date = models.DateTimeField(auto_now_add=True)
     write_date = models.DateTimeField(auto_now=True)
