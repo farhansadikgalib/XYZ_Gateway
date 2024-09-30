@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'app_auth',
     'core',
     'app_transaction',
+    'app_merchant',
     # Additional Libraries
     'rest_framework',
     'rest_framework_simplejwt',
