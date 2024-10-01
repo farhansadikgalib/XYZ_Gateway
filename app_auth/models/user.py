@@ -69,9 +69,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         verbose_name='user permissions',
     )
 
-    # def save(self, *args, **kwargs):
-    #     if not self._state.adding and self.password != self.__class__.objects.get(pk=self.pk).password:
-    #         self.set_password(self.password)
-    #     super().save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        if not self._state.adding and self.password != self.__class__.objects.get(pk=self.pk).password:
+            self.set_password(self.password)
+        super().save(*args, **kwargs)
 
 

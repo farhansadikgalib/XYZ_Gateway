@@ -29,7 +29,7 @@ urlpatterns = [
 
     # Apps Url
     path('api/v1/app-auth/', include('app_auth.urls')),
-    path('api/v1/app-transaction.py/', include('app_transaction.urls')),
+    path('api/v1/app-transaction/', include('app_transaction.urls')),
 
     # Rest Framework 
     path('api-auth/', include('rest_framework.urls')),
