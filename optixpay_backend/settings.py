@@ -27,6 +27,10 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*').split(',')
 
 
 # Application definition
+<<<<<<< HEAD
+=======
+
+>>>>>>> c107bba3e6371f16ae065af52c9e9639f2e46410
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
