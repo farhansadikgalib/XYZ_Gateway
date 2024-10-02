@@ -58,12 +58,12 @@ class VerifyOTPView(generics.GenericAPIView):
         if cached_otp and str(cached_otp) == otp:
             try:
                 user = CustomUser.objects.get(email=email)
-                user.is_active = 'inactive'  # Mark user as active (verified)
+                user.is_active = True  # Mark user as active (verified)
                 user.save()
                 return Response({"message": "OTP verified. User is now active."}, status=status.HTTP_200_OK)
             except CustomUser.DoesNotExist:
                 user = CustomUser.objects.get(email=email)
-                user.is_active = 'active'  # Mark user as active (verified)
+                user.is_active = False  # Mark user as active (verified)
                 user.save()
                 key = f"otp_{user.email}"
                 cache.delete(key)
