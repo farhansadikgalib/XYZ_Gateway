@@ -27,10 +27,6 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*').split(',')
 
 
 # Application definition
-<<<<<<< HEAD
-=======
-
->>>>>>> c107bba3e6371f16ae065af52c9e9639f2e46410
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -91,7 +87,7 @@ WSGI_APPLICATION = 'optixpay_backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-if DEBUG:
+if not DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',

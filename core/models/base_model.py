@@ -8,10 +8,17 @@ from app_auth.models.user import CustomUser
 
 class SoftDeleteManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(is_active=False)
+        return super().get_queryset().all()
 
 
 class BaseModel(models.Model):
+    IS_ACTIVE_VALUeS = [
+        ('active', 'Active'),
+        ('inactive', 'Inactive'),
+        ('hold', 'Hold'),
+        ('soft_deleted', 'Soft Deleted'),
+    ]
+
     class Meta:
         abstract = True
 
@@ -22,14 +29,14 @@ class BaseModel(models.Model):
     updated_by = models.ForeignKey(CustomUser, on_delete=models.SET_NULL,
                                    null=True, related_name='%(class)s_updated')
 
-    is_active = models.BooleanField(default=False)
+    is_active = models.CharField(max_length=20, choices=IS_ACTIVE_VALUeS, default='inactive')
     version = models.IntegerField(default=1)
 
     objects = SoftDeleteManager()
     all_objects = models.Manager()
 
     def soft_delete(self, update_user=None):
-        self.is_active = True
+        self.is_active = 'soft_deleted'
         if update_user is not None:
             self.updated_by = update_user
         self.save()

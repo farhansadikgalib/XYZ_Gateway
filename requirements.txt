@@ -20,3 +20,4 @@ python-decouple~=3.8
 gunicorn>=21.2.0
 setuptools
 pillow
+cryptography
