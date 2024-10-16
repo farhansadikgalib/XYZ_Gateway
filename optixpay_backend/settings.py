@@ -6,7 +6,6 @@ from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -83,7 +82,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'optixpay_backend.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
@@ -100,12 +98,11 @@ if not DEBUG:
     }
 else:
     DATABASES = {
-            'default': {
+        'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -125,7 +122,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -137,7 +133,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 STATIC_URL = '/static/'
@@ -145,7 +140,6 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",  # If you have custom static files
 ]
 STATIC_ROOT = BASE_DIR / "staticfiles"  # This is the directory where collected static files will be stored
-
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -222,4 +216,3 @@ MINIO_STORAGE_ENDPOINT = '147.79.66.187:9000'  # IP address and port of the MinI
 MINIO_STORAGE_ACCESS_KEY = "DlDYlIh7zzodF08GfMj4"
 MINIO_STORAGE_SECRET_KEY = "rZ8kB1B010XJYtF5eTkgTp1Dplncw5tC0eBonQjP"
 MINIO_STORAGE_BUCKET_NAME = 'optixpaybucket'  # The bucket name in MinIO
-
